@@ -39,7 +39,13 @@ export const load: PageServerLoad = async ({ url }) => {
 
   const recipesList = await query;
 
+  // Fix image URLs for backward compatibility
+  const fixedRecipesList = recipesList.map(recipe => ({
+    ...recipe,
+    featuredImage: recipe.featuredImage ? recipe.featuredImage.replace('/upload/', '/uploads/') : null
+  }));
+
   return {
-    recipes: recipesList,
+    recipes: fixedRecipesList,
   };
 };

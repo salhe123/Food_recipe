@@ -18,12 +18,12 @@
   <meta name="description" content="Explore recipe categories on RecipeApp" />
 </svelte:head>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="min-h-screen flex flex-col items-center justify-center px-4 py-8">
   <!-- Hero Section -->
-  <section class="text-center mb-12">
-    <h1 class="text-5xl sm:text-6xl font-bold text-gray-800 mb-6">Recipe Categories</h1>
-    <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-      Discover amazing recipes organized by category, from hearty breakfasts to indulgent desserts and everything in between.
+  <section class="text-center mb-16 max-w-4xl">
+    <h1 class="text-6xl sm:text-7xl font-bold text-gray-800 mb-8">Explore by Category</h1>
+    <p class="text-2xl text-gray-600 leading-relaxed mb-8">
+      Find the perfect recipe for any meal or occasion
     </p>
     {#if $authStore.user}
       <form method="POST" action="?/seedCategories" use:enhance class="mt-8">
@@ -38,26 +38,25 @@
   </section>
 
   <!-- Categories Grid -->
-  <section>
+  <section class="w-full max-w-6xl">
     {#if data.categories.length > 0}
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
         {#each data.categories as category}
           <a
             href="/categories/{category.name.toLowerCase()}"
-            class="group bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 border border-gray-100"
+            class="group bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 border border-gray-100 w-full max-w-xs"
           >
             <div class="text-center">
-              <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-orange-400 to-red-500 rounded-2xl flex items-center justify-center group-hover:from-red-500 group-hover:to-pink-600 transition-all">
-                <span class="text-3xl font-bold text-white">
+              <div class="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-orange-400 to-red-500 rounded-2xl flex items-center justify-center group-hover:from-red-500 group-hover:to-pink-600 transition-all">
+                <span class="text-4xl font-bold text-white">
                   {category.name[0]}
                 </span>
               </div>
               <h3 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-orange-600 transition-colors">
                 {category.name}
               </h3>
-              <p class="text-gray-600 mb-4">Explore {category.name} recipes</p>
               <div class="flex items-center justify-center text-orange-500 group-hover:text-orange-600 transition-colors">
-                <span class="text-sm font-semibold mr-2">Browse Recipes</span>
+                <span class="text-sm font-semibold mr-2">Explore</span>
                 <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>

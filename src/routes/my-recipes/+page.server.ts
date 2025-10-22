@@ -2,24 +2,24 @@ import type { PageServerLoad, Actions } from './$types';
 import { db } from '$lib/db';
 import { recipes, users, categories, recipe_images, steps, ingredients } from '$lib/server/db/schema';
 import { eq, and } from 'drizzle-orm';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import pkg from 'jsonwebtoken';
 import { env } from '$env/dynamic/private';
 
 
 const { verify } = pkg;
 
-export const load: PageServerLoad = async ({ cookies }) => {
+export const load: PageServerLoad = async ({ cookies, url }) => {
   const token = cookies.get('token');
   if (!token) {
-    return fail(401, { error: 'Unauthorized' });
+    throw redirect(302, '/auth/login');
   }
 
   let user: { id: number; email: string };
   try {
     user = verify(token, env.JWT_SECRET) as { id: number; email: string };
   } catch {
-    return fail(401, { error: 'Invalid token' });
+    throw redirect(302, '/auth/login');
   }
 
   const userRecipes = await db
@@ -38,7 +38,12 @@ export const load: PageServerLoad = async ({ cookies }) => {
     .leftJoin(recipe_images, and(eq(recipe_images.recipeId, recipes.id), eq(recipe_images.isFeatured, true)))
     .where(eq(recipes.userId, user.id));
 
-  return { recipes: userRecipes };
+  const fixedUserRecipes = userRecipes.map(recipe => ({
+    ...recipe,
+    featuredImage: recipe.featuredImage ? recipe.featuredImage.replace('/upload/', '/uploads/') : null
+  }));
+
+  return { recipes: fixedUserRecipes };
 };
 
 export const actions: Actions = {

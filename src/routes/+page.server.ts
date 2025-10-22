@@ -23,9 +23,15 @@ export const load: PageServerLoad = async () => {
     .orderBy(recipes.createdAt)
     .limit(6);
 
+  // Fix image URLs for backward compatibility
+  const fixedFeaturedRecipes = featuredRecipes.map(recipe => ({
+    ...recipe,
+    featuredImage: recipe.featuredImage ? recipe.featuredImage.replace('/upload/', '/uploads/') : null
+  }));
+
   return {
     categories: categoryList,
-    featuredRecipes,
+    featuredRecipes: fixedFeaturedRecipes,
   };
 };
 

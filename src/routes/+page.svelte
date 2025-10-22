@@ -114,11 +114,11 @@
     <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
       Find the perfect recipe for any meal or occasion
     </p>
-    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-6">
+    <div class="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
       {#each data.categories as category}
         <a
           href="/categories/{category.name.toLowerCase()}"
-          class="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 border border-gray-100"
+          class="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 border border-gray-100 w-32 flex-shrink-0"
         >
           <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-orange-400 to-red-500 rounded-full flex items-center justify-center group-hover:from-red-500 group-hover:to-pink-600 transition-all">
             <span class="text-2xl font-bold text-white">

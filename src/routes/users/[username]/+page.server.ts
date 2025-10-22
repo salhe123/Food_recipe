@@ -33,8 +33,14 @@ export const load: ServerLoad = async ({ params }) => {
     .leftJoin(recipe_images, and(eq(recipe_images.recipeId, recipes.id), eq(recipe_images.isFeatured, true)))
     .where(eq(recipes.userId, user.id));
 
+  // Fix image URLs for backward compatibility
+  const fixedRecipesList = recipesList.map(recipe => ({
+    ...recipe,
+    featuredImage: recipe.featuredImage ? recipe.featuredImage.replace('/upload/', '/uploads/') : null
+  }));
+
   return {
     username,
-    recipes: recipesList,
+    recipes: fixedRecipesList,
   };
 };

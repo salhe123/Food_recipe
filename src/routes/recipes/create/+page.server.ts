@@ -79,12 +79,15 @@ export const actions: Actions = {
 
     // Handle images
     if (images.length > 0) {
+      const uploadDir = join(process.cwd(), 'static/uploads');
+      await writeFile(join(uploadDir, '.gitkeep'), '').catch(() => {}); // Ensure directory exists
+      
       const imageUrls = await Promise.all(
         images.map(async (image, index) => {
-          const key = `recipes/${newRecipe.id}/${Date.now()}-${index}.jpg`;
-          const filePath = join('static/upload', key);
+          const fileName = `${newRecipe.id}-${Date.now()}-${index}${image.name ? '.' + image.name.split('.').pop() : '.jpg'}`;
+          const filePath = join(uploadDir, fileName);
           await writeFile(filePath, Buffer.from(await image.arrayBuffer()));
-          const imageUrl = `/upload/${key}`;
+          const imageUrl = `/uploads/${fileName}`;
           return { imageUrl, isFeatured: index === featuredImageIndex };
         })
       );

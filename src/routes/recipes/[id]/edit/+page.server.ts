@@ -50,6 +50,12 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
     .from(recipe_images)
     .where(eq(recipe_images.recipeId, recipeId));
 
+  // Fix image URLs for backward compatibility
+  const fixedImages = recipeImages.map(img => ({
+    ...img,
+    imageUrl: img.imageUrl.replace('/upload/', '/uploads/')
+  }));
+
   const recipeIngredients = await db
     .select({ name: ingredients.name, quantity: ingredients.quantity })
     .from(ingredients)
@@ -66,7 +72,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
   return {
     recipe: {
       ...recipe,
-      images: recipeImages,
+      images: fixedImages,
       ingredients: recipeIngredients,
       steps: recipeSteps,
     },
