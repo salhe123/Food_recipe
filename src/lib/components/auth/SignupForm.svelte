@@ -15,10 +15,9 @@
 </script>
 
 <div class="min-h-screen bg-gradient-to-br from-orange-400 via-red-500 to-pink-600 flex items-center justify-center p-4 relative">
-  <!-- Home Icon - Top Left -->
   <a 
     href="/" 
-    class="absolute top-6 left-6 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all transform hover:scale-110 shadow-lg"
+    class="absolute top-6 left-6 bg-white backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all transform hover:scale-110 shadow-lg"
     aria-label="Back to Home"
   >
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -27,7 +26,6 @@
   </a>
   
   <div class="max-w-md w-full">
-    <!-- Logo/Brand -->
     <div class="text-center mb-8">
       <a href="/" class="inline-block">
         <h1 class="text-4xl font-bold text-white mb-2">RecipeApp</h1>
@@ -35,7 +33,6 @@
       </a>
     </div>
 
-    <!-- Signup Form -->
     <div class="bg-white rounded-3xl shadow-2xl p-8">
       <div class="text-center mb-8">
         <h2 class="text-3xl font-bold text-gray-800 mb-2">Create Account</h2>
@@ -64,9 +61,7 @@
           }) => {
             isLoading = false;
             if (result.type === 'success' && result.data && 'user' in result.data && 'token' in result.data) {
-              // persist user in localStorage via authStore
               authStore.set({ user: result.data.user, token: result.data.token });
-              // redirect to homepage
               window.location.href = '/';
             } else if (result.type === 'failure' && result.data && 'error' in result.data) {
               error = result.data.error;
@@ -77,7 +72,6 @@
         }}
         class="space-y-6"
       >
-        <!-- Username Field -->
         <div>
           <label for="username" class="block text-sm font-semibold text-gray-700 mb-2">Username</label>
           <div class="relative">
@@ -98,7 +92,6 @@
           </div>
         </div>
 
-        <!-- Email Field -->
         <div>
           <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
           <div class="relative">
@@ -119,7 +112,6 @@
           </div>
         </div>
 
-        <!-- Password Field -->
         <div>
           <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
           <div class="relative">
@@ -157,7 +149,6 @@
           </div>
         </div>
 
-        <!-- Confirm Password Field -->
         <div>
           <label for="confirmPassword" class="block text-sm font-semibold text-gray-700 mb-2">Confirm Password</label>
           <div class="relative">
@@ -194,7 +185,6 @@
           </div>
         </div>
 
-        <!-- Terms and Conditions -->
         <div class="flex items-start">
           <div class="flex items-center h-5">
             <input 
@@ -210,8 +200,6 @@
             </label>
           </div>
         </div>
-
-        <!-- Submit Button -->
         <button
           type="submit"
           disabled={isLoading || !agreeToTerms || password !== confirmPassword}
@@ -231,7 +219,6 @@
         </button>
       </form>
 
-      <!-- Divider -->
       <div class="mt-8 mb-6">
         <div class="relative">
           <div class="absolute inset-0 flex items-center">
@@ -243,7 +230,6 @@
         </div>
       </div>
 
-      <!-- Login Link -->
       <div class="text-center">
         <a 
           href="/auth/login" 

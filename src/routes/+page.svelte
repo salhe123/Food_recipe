@@ -150,7 +150,7 @@
       <div class="text-center mt-12">
         <a
           href="/recipes"
-          class="inline-block bg-gradient-to-r from-orange-400 to-red-500 hover:from-red-500 hover:to-pink-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-lg"
+          class="inline-block bg-gradient-to-r from-orange-50 to-red-100 hover:from-red-100 hover:to-pink-200 text-white px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-lg"
         >
           View All Recipes
         </a>

@@ -11,10 +11,9 @@
 </script>
 
 <div class="min-h-screen bg-gradient-to-br from-orange-400 via-red-500 to-pink-600 flex items-center justify-center p-4 relative">
-  <!-- Home Icon - Top Left -->
-  <a 
-    href="/" 
-    class="absolute top-6 left-6 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all transform hover:scale-110 shadow-lg"
+  <a
+    href="/"
+    class="absolute top-6 left-6 bg-white backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all transform hover:scale-110 shadow-lg"
     aria-label="Back to Home"
   >
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -23,7 +22,6 @@
   </a>
   
   <div class="max-w-md w-full">
-    <!-- Logo/Brand -->
     <div class="text-center mb-8">
       <a href="/" class="inline-block">
         <h1 class="text-4xl font-bold text-white mb-2">RecipeApp</h1>
@@ -31,7 +29,6 @@
       </a>
     </div>
 
-    <!-- Login Form -->
     <div class="bg-white rounded-3xl shadow-2xl p-8">
       <div class="text-center mb-8">
         <h2 class="text-3xl font-bold text-gray-800 mb-2">Welcome Back!</h2>
@@ -60,9 +57,7 @@
           }) => {
             isLoading = false;
             if (result.type === 'success' && result.data && 'user' in result.data && 'token' in result.data) {
-              // persist user in localStorage via authStore
               authStore.set({ user: result.data.user, token: result.data.token });
-              // redirect to homepage
               window.location.href = '/';
             } else if (result.type === 'failure' && result.data && 'error' in result.data) {
               error = result.data.error;
@@ -73,7 +68,6 @@
         }}
         class="space-y-6"
       >
-        <!-- Email Field -->
         <div>
           <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
           <div class="relative">
@@ -94,7 +88,6 @@
           </div>
         </div>
 
-        <!-- Password Field -->
         <div>
           <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
           <div class="relative">
@@ -132,7 +125,6 @@
           </div>
         </div>
 
-        <!-- Remember Me & Forgot Password -->
         <div class="flex items-center justify-between">
           <label class="flex items-center">
             <input type="checkbox" class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded">
@@ -141,7 +133,6 @@
           <a href="/auth/forgot-password" class="text-sm text-orange-600 hover:text-orange-500 font-medium">Forgot password?</a>
         </div>
 
-        <!-- Submit Button -->
         <button
           type="submit"
           disabled={isLoading}
