@@ -66,7 +66,7 @@
         </p>
         <a
           href="/recipes"
-          class="inline-block bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-lg"
+          class="inline-block bg-gradient-to-r from-orange-500 to-red-100 hover:from-orange-100 hover:to-red-100 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-lg"
         >
           Browse All Recipes
         </a>

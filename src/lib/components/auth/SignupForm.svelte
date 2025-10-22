@@ -209,7 +209,7 @@
 
     <!-- Back to Home -->
     <div class="text-center mt-6">
-      <a href="/" class="text-white text-opacity-80 hover:text-opacity-100 transition-all flex items-center justify-center gap-2">
+      <a href="/" class="text-red-950 text-opacity-80 hover:text-opacity-100 transition-all flex items-center justify-center gap-2">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
         </svg>
