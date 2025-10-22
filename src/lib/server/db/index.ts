@@ -3,7 +3,10 @@ import { createPool } from 'mysql2/promise';
 import * as schema from '$lib/server/db/schema';
 
 const pool = createPool({
-  uri: process.env.DATABASE_URL
+  host: 'localhost',
+  user: 'root',
+  password: '123456',
+  database: 'recipe_app',
 });
 
 export const db = drizzle(pool, { schema, mode: 'default' });
