@@ -159,7 +159,7 @@
           </div>
           <div class="ml-3 text-sm">
             <label for="agreeToTerms" class="text-gray-600">
-              I agree to the <a href="#" class="text-orange-600 hover:text-orange-500 font-medium">Terms of Service</a> and <a href="#" class="text-orange-600 hover:text-orange-500 font-medium">Privacy Policy</a>
+              I agree to the <a href="/terms" class="text-orange-600 hover:text-orange-500 font-medium">Terms of Service</a> and <a href="/privacy" class="text-orange-600 hover:text-orange-500 font-medium">Privacy Policy</a>
             </label>
           </div>
         </div>

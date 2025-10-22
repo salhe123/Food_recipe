@@ -5,8 +5,8 @@
   import RecipeCard from '$lib/components/recipes/RecipeCard.svelte';
 
   let { data } = $props<{ data: PageData }>();
-  let searchQuery = '';
-  let selectedCategory = '';
+  let searchQuery = $state('');
+  let selectedCategory = $state('');
 
   function handleSearch() {
     if (searchQuery.trim()) {
@@ -49,11 +49,12 @@
               bind:value={searchQuery}
               placeholder="Search for recipes, ingredients, or cuisines..."
               class="w-full px-6 py-4 text-lg rounded-full border-0 shadow-lg focus:ring-4 focus:ring-yellow-300 focus:outline-none text-gray-800"
-              on:keydown={(e) => e.key === 'Enter' && handleSearch()}
+              onkeydown={(e) => e.key === 'Enter' && handleSearch()}
             />
             <button
-              on:click={handleSearch}
+              onclick={handleSearch}
               class="absolute right-2 top-2 bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full transition-colors"
+              aria-label="Search recipes"
             >
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>

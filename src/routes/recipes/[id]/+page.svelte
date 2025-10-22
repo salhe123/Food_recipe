@@ -152,8 +152,9 @@
             {#each Array(5) as _, i}
               <button
                 type="submit"
-                on:click={() => setRating(i + 1)}
+                onclick={() => setRating(i + 1)}
                 class="focus:outline-none transform hover:scale-110 transition-transform"
+                aria-label={`Rate ${i + 1} stars`}
               >
                 <svg
                   class="w-6 h-6 {i < (data.recipe.userRating || rating) ? 'text-yellow-400 fill-current' : 'text-gray-300 fill-none hover:text-yellow-300'} stroke-current transition-colors"
