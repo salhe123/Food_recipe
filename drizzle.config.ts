@@ -6,7 +6,7 @@ export default defineConfig({
   schema: './src/lib/server/db/schema.ts',
   dialect: 'mysql',
   dbCredentials: {
-    url: 'mysql://root:123456@localhost:3306/recipe_app',
+    url: process.env.DATABASE_URL,
   },
   verbose: true,
   strict: true,
