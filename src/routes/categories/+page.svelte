@@ -18,17 +18,18 @@
   <meta name="description" content="Explore recipe categories on RecipeApp" />
 </svelte:head>
 
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
-  <section class="text-center">
-    <h1 class="text-4xl font-bold text-gray-800 mb-4">Recipe Categories</h1>
-    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-      Discover recipes by category, from hearty breakfasts to indulgent desserts.
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Hero Section -->
+  <section class="text-center mb-12">
+    <h1 class="text-5xl sm:text-6xl font-bold text-gray-800 mb-6">Recipe Categories</h1>
+    <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+      Discover amazing recipes organized by category, from hearty breakfasts to indulgent desserts and everything in between.
     </p>
     {#if $authStore.user}
-      <form method="POST" action="?/seedCategories" use:enhance class="mt-6">
+      <form method="POST" action="?/seedCategories" use:enhance class="mt-8">
         <button
           type="submit"
-          class="inline-block bg-gray-200 text-blue-600 px-6 py-3 rounded-md font-semibold hover:bg-gray-300 transition"
+          class="inline-block bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors"
         >
           Seed Categories
         </button>
@@ -36,21 +37,53 @@
     {/if}
   </section>
 
+  <!-- Categories Grid -->
   <section>
     {#if data.categories.length > 0}
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {#each data.categories as category}
           <a
             href="/categories/{category.name.toLowerCase()}"
-            class="{categoryColors[category.name] || 'bg-gray-100 hover:bg-gray-200'} p-6 rounded-xl shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1"
+            class="group bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 border border-gray-100"
           >
-            <h3 class="text-xl font-semibold text-gray-800 mb-2">{category.name}</h3>
-            <p class="text-gray-600">Explore {category.name} recipes</p>
+            <div class="text-center">
+              <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-orange-400 to-red-500 rounded-2xl flex items-center justify-center group-hover:from-red-500 group-hover:to-pink-600 transition-all">
+                <span class="text-3xl font-bold text-white">
+                  {category.name[0]}
+                </span>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-orange-600 transition-colors">
+                {category.name}
+              </h3>
+              <p class="text-gray-600 mb-4">Explore {category.name} recipes</p>
+              <div class="flex items-center justify-center text-orange-500 group-hover:text-orange-600 transition-colors">
+                <span class="text-sm font-semibold mr-2">Browse Recipes</span>
+                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </div>
+            </div>
           </a>
         {/each}
       </div>
     {:else}
-      <p class="text-gray-600 text-center">No categories available yet.</p>
+      <div class="text-center py-16">
+        <div class="w-32 h-32 mx-auto mb-8 bg-gray-200 rounded-full flex items-center justify-center">
+          <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">No categories available</h3>
+        <p class="text-gray-600 mb-8 max-w-md mx-auto">
+          Categories haven't been set up yet. Contact an administrator to add recipe categories.
+        </p>
+        <a
+          href="/recipes"
+          class="inline-block bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-lg"
+        >
+          Browse All Recipes
+        </a>
+      </div>
     {/if}
   </section>
 </div>
