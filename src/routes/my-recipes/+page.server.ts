@@ -1,7 +1,7 @@
 import type { PageServerLoad, Actions } from './$types';
 import { db } from '$lib/db';
-import { recipes, users, categories, recipe_images, steps, ingredients } from '$lib/server/db/schema';
-import { eq, and } from 'drizzle-orm';
+import { recipes, users, categories, recipe_images, steps, ingredients, likes, comments } from '$lib/server/db/schema';
+import { eq, and, sql } from 'drizzle-orm';
 import { fail, redirect } from '@sveltejs/kit';
 import pkg from 'jsonwebtoken';
 import { env } from '$env/dynamic/private';
@@ -38,7 +38,28 @@ export const load: PageServerLoad = async ({ cookies, url }) => {
     .leftJoin(recipe_images, and(eq(recipe_images.recipeId, recipes.id), eq(recipe_images.isFeatured, true)))
     .where(eq(recipes.userId, user.id));
 
-  const fixedUserRecipes = userRecipes.map(recipe => ({
+  // Get like and comment counts for each recipe
+  const recipesWithCounts = await Promise.all(
+    userRecipes.map(async (recipe) => {
+      const [likeData] = await db
+        .select({ count: sql<number>`count(*)`.as('count') })
+        .from(likes)
+        .where(eq(likes.recipeId, recipe.id));
+
+      const [commentData] = await db
+        .select({ count: sql<number>`count(*)`.as('count') })
+        .from(comments)
+        .where(eq(comments.recipeId, recipe.id));
+
+      return {
+        ...recipe,
+        likeCount: likeData.count,
+        commentCount: commentData.count,
+      };
+    })
+  );
+
+  const fixedUserRecipes = recipesWithCounts.map(recipe => ({
     ...recipe,
     featuredImage: recipe.featuredImage ? recipe.featuredImage.replace('/upload/', '/uploads/') : null
   }));

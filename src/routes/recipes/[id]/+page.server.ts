@@ -121,7 +121,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
       isLiked,
       isBookmarked,
       comments: commentsList,
-      averageRating: ratingData.average || 0,
+      averageRating: Number(ratingData.average) || 0,
       ratingCount: ratingData.count,
       userRating,
       isPremium: !!premiumData,

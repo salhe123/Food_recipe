@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/db';
-import { recipes, users, categories, recipe_images, ingredients } from '$lib/server/db/schema';
-import { eq, and, like } from 'drizzle-orm';
+import { recipes, users, categories, recipe_images, ingredients, likes, comments } from '$lib/server/db/schema';
+import { eq, and, like, sql } from 'drizzle-orm';
 
 export const load: PageServerLoad = async ({ url }) => {
   const searchQuery = url.searchParams.get('search') || '';
@@ -39,8 +39,29 @@ export const load: PageServerLoad = async ({ url }) => {
 
   const recipesList = await query;
 
+  // Get like and comment counts for each recipe
+  const recipesWithCounts = await Promise.all(
+    recipesList.map(async (recipe) => {
+      const [likeData] = await db
+        .select({ count: sql<number>`count(*)`.as('count') })
+        .from(likes)
+        .where(eq(likes.recipeId, recipe.id));
+
+      const [commentData] = await db
+        .select({ count: sql<number>`count(*)`.as('count') })
+        .from(comments)
+        .where(eq(comments.recipeId, recipe.id));
+
+      return {
+        ...recipe,
+        likeCount: likeData.count,
+        commentCount: commentData.count,
+      };
+    })
+  );
+
   // Fix image URLs for backward compatibility
-  const fixedRecipesList = recipesList.map(recipe => ({
+  const fixedRecipesList = recipesWithCounts.map(recipe => ({
     ...recipe,
     featuredImage: recipe.featuredImage ? recipe.featuredImage.replace('/upload/', '/uploads/') : null
   }));

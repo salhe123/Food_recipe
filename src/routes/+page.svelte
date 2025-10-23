@@ -2,7 +2,7 @@
   import type { PageData } from './$types';
   import { authStore } from '$lib/stores/auth';
   import { enhance } from '$app/forms';
-  import RecipeCard from '$lib/components/recipes/RecipeCard.svelte';
+  import InteractiveRecipeCard from '$lib/components/recipes/InteractiveRecipeCard.svelte';
 
   let { data } = $props<{ data: PageData }>();
   let searchQuery = $state('');
@@ -141,10 +141,10 @@
         Handpicked recipes that are trending and loved by our community
       </p>
     </div>
-    {#if data.featuredRecipes.length > 0}
+    {#if data.featuredRecipes && data.featuredRecipes.length > 0}
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {#each data.featuredRecipes as recipe}
-          <RecipeCard {recipe} />
+          <InteractiveRecipeCard {recipe} />
         {/each}
       </div>
       <div class="text-center mt-12">

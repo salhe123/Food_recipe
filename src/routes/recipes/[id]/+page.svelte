@@ -64,14 +64,14 @@
                   <span class="text-yellow-400">
                     {#each Array(5) as _, i}
                       <svg
-                        class="w-6 h-6 inline {i < Math.round(data.recipe.averageRating) ? 'fill-current' : 'fill-none'} stroke-current"
+                        class="w-6 h-6 inline {i < Math.round(Number(data.recipe.averageRating) || 0) ? 'fill-current' : 'fill-none'} stroke-current"
                         viewBox="0 0 24 24"
                       >
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                       </svg>
                     {/each}
                   </span>
-                  <span class="text-lg font-semibold">{data.recipe.averageRating.toFixed(1)}</span>
+                  <span class="text-lg font-semibold">{typeof data.recipe.averageRating === 'number' ? data.recipe.averageRating.toFixed(1) : '0.0'}</span>
                   <span class="text-white/80">({data.recipe.ratingCount} ratings)</span>
                 </div>
               </div>

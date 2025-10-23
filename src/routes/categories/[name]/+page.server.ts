@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/db';
-import { categories, recipes, users, recipe_images } from '$lib/server/db/schema';
-import { eq, and } from 'drizzle-orm';
+import { categories, recipes, users, recipe_images, likes, comments } from '$lib/server/db/schema';
+import { eq, and, sql } from 'drizzle-orm';
 import { fail } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -33,8 +33,29 @@ export const load: PageServerLoad = async ({ params }) => {
     .leftJoin(recipe_images, and(eq(recipe_images.recipeId, recipes.id), eq(recipe_images.isFeatured, true)))
     .where(eq(categories.name, categoryName));
 
+  // Get like and comment counts for each recipe
+  const recipesWithCounts = await Promise.all(
+    recipesList.map(async (recipe) => {
+      const [likeData] = await db
+        .select({ count: sql<number>`count(*)`.as('count') })
+        .from(likes)
+        .where(eq(likes.recipeId, recipe.id));
+
+      const [commentData] = await db
+        .select({ count: sql<number>`count(*)`.as('count') })
+        .from(comments)
+        .where(eq(comments.recipeId, recipe.id));
+
+      return {
+        ...recipe,
+        likeCount: likeData.count,
+        commentCount: commentData.count,
+      };
+    })
+  );
+
   // Fix image URLs for backward compatibility
-  const fixedRecipesList = recipesList.map(recipe => ({
+  const fixedRecipesList = recipesWithCounts.map(recipe => ({
     ...recipe,
     featuredImage: recipe.featuredImage ? recipe.featuredImage.replace('/upload/', '/uploads/') : null
   }));
